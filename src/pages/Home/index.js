@@ -288,53 +288,87 @@ export default function Home({ navigation }) {
         <MyGap jarak={10} />
         <MyCarouser />
 
-        {/* list Kategoti */}
-        <View>
-          <View style={{
-            flexDirection: 'row',
-            flex: 1,
-            paddingHorizontal: 10,
-            padding: 10,
-            alignItems: 'center'
-          }}>
-            <Icon type='ionicon' name="grid-outline" color={colors.textPrimary} />
-            <Text style={{
-              left: 10,
-              color: colors.textPrimary,
-              fontFamily: fonts.secondary[600],
-              fontSize: windowWidth / 25,
-            }}>Kategori Barang</Text>
-          </View>
-          <View style={{
-            flex: 1,
-          }}>
-            <FlatList numColumns={3} data={kategori} renderItem={__renderItemKategori} />
-          </View>
-        </View>
+        <View style={{
+          flex: 1,
+          padding: 10,
+        }}>
 
-        {/* list Product */}
-        <View>
-          <View style={{
+
+
+
+          <TouchableOpacity onPress={() => navigation.navigate('MenuKelas', {
+            transmisi: 'MANUAL'
+          })} style={{
+            marginVertical: 5,
+            elevation: 1,
             flexDirection: 'row',
-            flex: 1,
-            paddingHorizontal: 10,
-            padding: 10,
-            alignItems: 'center'
+            backgroundColor: colors.secondary
           }}>
-            <Icon type='ionicon' name="newspaper-outline" color={colors.textPrimary} />
-            <Text style={{
-              left: 10,
-              color: colors.textPrimary,
-              fontFamily: fonts.secondary[600],
-              fontSize: windowWidth / 25,
-            }}>Barang Terbaru</Text>
-          </View>
-          <View style={{
-            flex: 1
+            <View onPress={() => navigation.navigate('MenuKelas', {
+              transmisi: 'MANUAL'
+            })} style={{
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}>
+              <Image source={require('../../assets/logo.png')} style={{
+                height: windowHeight / 5,
+                width: windowHeight / 5,
+              }} />
+            </View>
+            <View style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}>
+              <Text style={{
+                fontFamily: fonts.secondary[600],
+                fontSize: windowWidth / 20,
+                color: colors.primary,
+              }}>KOMPONEN</Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => navigation.navigate('MenuKelas', {
+            transmisi: 'MATIC'
+          })} style={{
+            marginVertical: 5,
+            elevation: 1,
+            flexDirection: 'row',
+            backgroundColor: colors.primary
           }}>
-            <FlatList numColumns={2} data={produk} renderItem={__renderItem} />
-          </View>
+            <View style={{
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}>
+              <Image source={require('../../assets/logo.png')} style={{
+                height: windowHeight / 5,
+                width: windowHeight / 5,
+              }} />
+            </View>
+            <View style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}>
+              <Text style={{
+                fontFamily: fonts.secondary[600],
+                fontSize: windowWidth / 20,
+                color: colors.secondary,
+              }}>INVENTARISASI ASET</Text>
+            </View>
+          </TouchableOpacity>
+
         </View>
+        <Text
+          style={{
+            marginTop: 20,
+            textAlign: 'center',
+            fontSize: windowWidth / 30,
+            color: colors.primary,
+            fontFamily: fonts.secondary[600],
+          }}>
+          YAYASAN UNIVERSITAS KRISTEN INDONESIA
+        </Text>
       </ScrollView>
 
     </SafeAreaView>

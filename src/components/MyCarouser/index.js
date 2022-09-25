@@ -25,7 +25,7 @@ export default function MyCarouser() {
 
   useEffect(() => {
     axios.get(urlAPI + '/slider.php').then(res => {
-      console.log(res.data);
+      console.log('slider', res.data);
       setData(res.data);
     });
   }, []);

@@ -12,7 +12,7 @@ import {
   TextInput,
   ActivityIndicator,
 } from 'react-native';
-import { storeData, getData, urlAPI } from '../../utils/localStorage';
+import { storeData, getData, urlAPI, urlFull } from '../../utils/localStorage';
 import axios from 'axios';
 import { colors } from '../../utils/colors';
 import { windowWidth, fonts } from '../../utils/fonts';
@@ -63,67 +63,72 @@ export default function ({ navigation, route }) {
   };
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity
-      onPress={() => {
-        navigation.navigate('Show', {
-          key: item.kode_barang
-        });
-      }}
-      style={{
-        backgroundColor: colors.background1,
-        flex: 0.5,
-        margin: 5,
-
+    <TouchableOpacity onPress={() => navigation.navigate('Show', {
+      key: item.id
+    })} style={{
+      flexDirection: 'row',
+      marginVertical: 5,
+      borderBottomWidth: 1,
+      borderBottomColor: colors.border_list,
+      paddingBottom: 10,
+    }}>
+      <View style={{
+        flex: 1,
       }}>
-      <Image source={{
-        uri: item.image
-      }} style={{
-        alignSelf: 'center',
-        // resizeMode: 'contain',
-        width: '100%',
-        height: 200,
+        <Text
+          style={{
+            marginVertical: 2,
+            fontSize: windowWidth / 30,
+            color: colors.black,
+            fontFamily: fonts.secondary[600],
+          }}>
+          {item.nama_barang}
+        </Text>
+        <Text
+          style={{
+            marginVertical: 2,
+            fontSize: windowWidth / 30,
+            color: colors.textSecondary,
+            fontFamily: fonts.secondary[400],
+          }}>
+          {item.fakultas} / {item.prodi} / {item.kode_ruangan} - {item.nama_ruangan}
+        </Text>
+        <Text
+          style={{
+            marginVertical: 5,
+            fontSize: windowWidth / 25,
+            color: colors.black,
+            fontFamily: fonts.secondary[600],
+          }}>
+          {new Intl.NumberFormat().format(item.harga_perolehan)}
+        </Text>
 
-      }} />
-
-
-
-
-
-      <Text
-        style={{
-          paddingLeft: 5,
-          fontSize: windowWidth / 25,
-          color: colors.price,
-          fontFamily: fonts.secondary[600],
-        }}>
-        Rp. {new Intl.NumberFormat().format(item.harga_barang)}
-      </Text>
-      {/* <Text
-      style={{
-        padding: 5,
-        backgroundColor: colors.primary,
-        fontSize: windowWidth / 35,
-        color: colors.white, borderRadius: 2,
-        fontFamily: fonts.secondary[400],
+      </View>
+      <View style={{
+        justifyContent: 'center',
+        alignItems: 'center'
       }}>
-      {item.nama_kategori}
-    </Text> */}
-      <Text
-        style={{
-          padding: 5,
-          height: 50,
-          fontSize: windowWidth / 30,
-          color: colors.textPrimary, borderRadius: 2,
-          fontFamily: fonts.secondary[400],
-        }}>
-        {item.nama_barang}
-      </Text>
+
+        {item.foto_barang !== '' && <Image source={{
+          uri: urlFull + item.foto_barang
+        }} style={{
+          alignSelf: 'center',
+          width: 80,
+          height: 80,
+          borderRadius: 10,
+
+        }} />}
 
 
+        {item.foto_barang === '' && <Image source={require('../../assets/noimage.png')} style={{
+          alignSelf: 'center',
+          width: 80,
+          height: 80,
+          borderRadius: 10,
 
+        }} />}
 
-
-
+      </View>
     </TouchableOpacity>
   );
 
@@ -171,7 +176,6 @@ export default function ({ navigation, route }) {
       {!loading && <FlatList
         showsVerticalScrollIndicator={false}
         data={data}
-        numColumns={2}
         renderItem={renderItem}
         keyExtractor={item => item.id}
       />}

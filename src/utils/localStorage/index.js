@@ -20,4 +20,5 @@ export const getData = async key => {
 };
 
 
-export const urlAPI = 'https://asset.zavalabs.com/api';
+export const urlAPI = 'http://192.168.43.121/asset/api';
+export const urlFull = 'http://192.168.43.121/asset/';

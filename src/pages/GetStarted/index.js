@@ -62,7 +62,7 @@ export default function GetStarted({ navigation }) {
             source={require('../../assets/logo.png')}
             style={{
               resizeMode: 'contain',
-              height: 150,
+              height: 300,
             }}
           />
         </View>

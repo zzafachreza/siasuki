@@ -25,7 +25,7 @@ export default function Splash({ navigation }) {
   const scaleRadius = new Animated.Value(0);
 
   Animated.timing(scaleLogo, {
-    toValue: 200,
+    toValue: 300,
     duration: 1000,
   }).start();
 

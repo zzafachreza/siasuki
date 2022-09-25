@@ -18,5 +18,6 @@ export const colors = {
   white: 'white',
   border: '#EEEDED',
   price: '#2C96F1',
+  border_list: '#E8E8E8',
 
 };
