@@ -89,7 +89,7 @@ export default function BottomNavigator({ state, descriptors, navigation }) {
                     } else {
                       console.log('barcode : ', result);
                       navigation.navigate('Show', {
-                        key: result
+                        key: parseInt(result)
                       })
                     }
 

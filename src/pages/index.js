@@ -46,6 +46,8 @@ import AddDua from './AddDua';
 import Kuis from './Kuis';
 import Scan from './Scan';
 import Show from './Show';
+import Komponen from './Komponen';
+import Show2 from './Show2';
 
 
 
@@ -103,5 +105,7 @@ export {
   Redeem,
   ListRedeem,
   Scan,
-  Show
+  Show,
+  Show2,
+  Komponen
 };

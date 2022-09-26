@@ -57,6 +57,8 @@ import {
   Kuis,
   Scan,
   Show,
+  Komponen,
+  Show2,
 } from '../pages';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomNavigator } from '../components';
@@ -100,6 +102,22 @@ export default function Router() {
       <Stack.Screen
         name="Show"
         component={Show}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <Stack.Screen
+        name="Show2"
+        component={Show2}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <Stack.Screen
+        name="Komponen"
+        component={Komponen}
         options={{
           headerShown: false,
         }}

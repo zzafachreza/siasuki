@@ -296,17 +296,16 @@ export default function Home({ navigation }) {
 
 
 
-          <TouchableOpacity onPress={() => navigation.navigate('MenuKelas', {
-            transmisi: 'MANUAL'
+          <TouchableOpacity onPress={() => navigation.navigate('Komponen', {
+            key: 0,
+            id_user: user.id
           })} style={{
             marginVertical: 5,
             elevation: 1,
             flexDirection: 'row',
             backgroundColor: colors.secondary
           }}>
-            <View onPress={() => navigation.navigate('MenuKelas', {
-              transmisi: 'MANUAL'
-            })} style={{
+            <View style={{
               justifyContent: 'center',
               alignItems: 'center'
             }}>
@@ -328,8 +327,9 @@ export default function Home({ navigation }) {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => navigation.navigate('MenuKelas', {
-            transmisi: 'MATIC'
+          <TouchableOpacity onPress={() => navigation.navigate('Barang', {
+            key: 0,
+            id_user: user.id
           })} style={{
             marginVertical: 5,
             elevation: 1,

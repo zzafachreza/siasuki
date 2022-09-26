@@ -87,21 +87,6 @@ export default function Show({ navigation, route }) {
                         height: 250,
                     }} />}
 
-                    <View style={{
-                        padding: 10,
-                        alignItems: 'flex-end'
-                    }}>
-                        <Text style={{
-                            padding: 10,
-                            backgroundColor: colors.secondary,
-                            borderRadius: 10,
-                            width: 100,
-                            textAlign: 'center',
-                            fontFamily: fonts.primary[400],
-                            fontSize: windowWidth / 20,
-                        }}>{barang.nama_kategori}</Text>
-                    </View>
-
                     <MyList label='Kampus' value={barang.kampus} />
                     <MyList label='Gedung' value={barang.gedung} />
                     <MyList label='Lantai' value={barang.lantai} />
@@ -145,11 +130,11 @@ export default function Show({ navigation, route }) {
                     <MyList label='Nama barang' value={barang.nama_barang} />
                     <MyList label='Merek' value={barang.merek} />
                     <MyList label='Unit' value={barang.unit} />
-                    <MyList label='Harga perolehan' value={barang.harga_perolehan} />
-                    <MyList label='Total perolehan' value={barang.total_perolehan} />
-                    <MyList label='Akumulasi penyusutan' value={barang.akumulasi_penyusutan} />
-                    <MyList label='Nilai buku' value={barang.nilai_buku} />
-                    <MyList label='Penyusutan' value={barang.penyusutan} />
+                    <MyList label='Harga perolehan' value={new Intl.NumberFormat().format(barang.harga_perolehan)} />
+                    <MyList label='Total perolehan' value={new Intl.NumberFormat().format(barang.total_perolehan)} />
+                    <MyList label='Akumulasi penyusutan' value={new Intl.NumberFormat().format(barang.akumulasi_penyusutan)} />
+                    <MyList label='Nilai buku' value={new Intl.NumberFormat().format(barang.nilai_buku)} />
+                    <MyList label='Penyusutan' value={new Intl.NumberFormat().format(barang.penyusutan)} />
                     <MyList label='Catatan' value={barang.catatan} />
                     <MyList label='Status' value={barang.status} />
                 </ScrollView>}
