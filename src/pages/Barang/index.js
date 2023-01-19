@@ -26,6 +26,7 @@ const wait = timeout => {
 export default function ({ navigation, route }) {
   const [refreshing, setRefreshing] = React.useState(false);
   const [data, setData] = useState([]);
+  const [tmp, setTmp] = useState([]);
   const [loading, setLoading] = useState(false);
   const [myKey, setMykey] = useState('');
 
@@ -44,28 +45,16 @@ export default function ({ navigation, route }) {
 
   const getDataBarang = (y) => {
     setLoading(true);
-    axios.post(urlAPI + '/1data_barang.php', {
-      key: route.params.key,
-      key2: y,
-      id_user: route.params.id_user
-    }).then(res => {
-      setMykey('');
-      console.warn(res.data);
-      setLoading(false);
+    axios.post(urlAPI + 'inventaris').then(res => {
+      console.log(res.data)
+      setLoading(false)
       setData(res.data);
-      if (res.data.length == 0) {
-        showMessage({
-          message: 'Maaf barang tidak ditemukan !',
-          type: 'default'
-        })
-      }
+      setTmp(res.data);
     });
   };
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity onPress={() => navigation.navigate('Show', {
-      key: item.id
-    })} style={{
+    <TouchableOpacity onPress={() => navigation.navigate('Show', item)} style={{
       flexDirection: 'row',
       marginVertical: 5,
       borderBottomWidth: 1,
@@ -79,10 +68,19 @@ export default function ({ navigation, route }) {
           style={{
             marginVertical: 2,
             fontSize: windowWidth / 30,
+            color: colors.primary,
+            fontFamily: fonts.secondary[400],
+          }}>
+          {item.label}
+        </Text>
+        <Text
+          style={{
+            marginVertical: 2,
+            fontSize: windowWidth / 30,
             color: colors.black,
             fontFamily: fonts.secondary[600],
           }}>
-          {item.nama_barang}
+          {item.nama_peralatan}
         </Text>
         <Text
           style={{
@@ -91,42 +89,35 @@ export default function ({ navigation, route }) {
             color: colors.textSecondary,
             fontFamily: fonts.secondary[400],
           }}>
-          {item.fakultas} / {item.prodi} / {item.kode_ruangan} - {item.nama_ruangan}
+          {item.kode_inventaris}
         </Text>
+      </View>
+      <View>
+        <Text style={{
+          backgroundColor: item.status == 'Mutation' ? colors.warning : colors.primary,
+          height: 20,
+          paddingHorizontal: 10,
+          paddingTop: 2,
+          borderRadius: 10,
+          fontSize: windowWidth / 30,
+          textAlign: 'center',
+          color: colors.white
+        }}>{item.status}</Text>
         <Text
           style={{
-            marginVertical: 5,
+            textAlign: 'center',
             fontSize: windowWidth / 25,
             color: colors.black,
-            fontFamily: fonts.secondary[600],
+            fontFamily: fonts.secondary[400],
           }}>
-          {new Intl.NumberFormat().format(item.harga_perolehan)}
+          Rp. {item.penyusutan}
         </Text>
-
       </View>
       <View style={{
-        justifyContent: 'center',
-        alignItems: 'center'
+        padding: 10,
       }}>
 
-        {item.foto_barang !== '' && <Image source={{
-          uri: urlFull + item.foto_barang
-        }} style={{
-          alignSelf: 'center',
-          width: 80,
-          height: 80,
-          borderRadius: 10,
-
-        }} />}
-
-
-        {item.foto_barang === '' && <Image source={require('../../assets/noimage.png')} style={{
-          alignSelf: 'center',
-          width: 80,
-          height: 80,
-          borderRadius: 10,
-
-        }} />}
+        <Icon color={colors.border} type='ionicon' name='chevron-forward-outline' />
 
       </View>
     </TouchableOpacity>
@@ -144,14 +135,19 @@ export default function ({ navigation, route }) {
         position: 'relative',
         padding: 5,
       }}>
-        <TextInput autoFocus value={myKey} autoCapitalize='none' onSubmitEditing={(x) => {
-          console.warn(x.nativeEvent.text);
-          setMykey(x.nativeEvent.text);
-          getDataBarang(x.nativeEvent.text);
-        }}
-          onChangeText={x => setMykey(x)}
+        <TextInput autoFocus autoCapitalize='none'
+          onChangeText={x => {
+
+
+            const filtered = tmp.filter(i => i.label.toLowerCase().indexOf(x.toLowerCase()) > -1);
+            console.log(filtered);
+            setData(filtered);
+
+
+          }}
+          keyboardType='number-pad'
           placeholderTextColor={colors.textPrimary}
-          placeholder='Masukan kata kunci' style={{
+          placeholder='Masukan label inventaris' style={{
             fontFamily: fonts.secondary[400],
             paddingLeft: 10,
             fontSize: windowWidth / 30,

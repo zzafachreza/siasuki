@@ -20,5 +20,6 @@ export const getData = async key => {
 };
 
 
-export const urlAPI = 'https://sias-uki.com/api';
+export const urlAPI = 'http://10.5.41.225/siasuki/api/';
 export const urlFull = 'https://sias-uki.com/';
+export const MYAPP = 'SiasUKI'

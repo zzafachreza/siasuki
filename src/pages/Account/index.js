@@ -53,130 +53,131 @@ export default function Account({ navigation, route }) {
       flex: 1,
       backgroundColor: colors.background1,
     }}>
-      <View style={{ padding: 10 }}>
-        <View style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-          <Image source={{
-            uri: user.foto_user,
-          }} style={{ width: 80, height: 80, borderRadius: 10, }} />
-        </View>
 
-        {/* data detail */}
-        <View style={{ padding: 10 }}>
+
+      {/* data detail */}
+      <View style={{ padding: 10, flex: 1, }}>
+
+
+        <MyGap jarak={10} />
+        <View>
+          <View
+            style={{
+              marginVertical: 3,
+              padding: 10,
+              backgroundColor: colors.white,
+              borderRadius: 10,
+            }}>
+            <Text
+              style={{
+                fontFamily: fonts.secondary[600],
+                color: colors.black,
+              }}>
+              Nama Pribadi
+            </Text>
+            <Text
+              style={{
+                fontFamily: fonts.secondary[400],
+                color: colors.primary,
+              }}>
+              {user.nama_lengkap}
+            </Text>
+          </View>
+
+
+          <View
+            style={{
+              marginVertical: 3,
+              padding: 10,
+              backgroundColor: colors.white,
+              borderRadius: 10,
+            }}>
+            <Text
+              style={{
+                fontFamily: fonts.secondary[600],
+                color: colors.black,
+              }}>
+              E-mail
+            </Text>
+            <Text
+              style={{
+                fontFamily: fonts.secondary[400],
+                color: colors.primary,
+              }}>
+              {user.email}
+            </Text>
+          </View>
+          <View
+            style={{
+              marginVertical: 3,
+              padding: 10,
+              backgroundColor: colors.white,
+              borderRadius: 10,
+            }}>
+            <Text
+              style={{
+                fontFamily: fonts.secondary[600],
+                color: colors.black,
+              }}>
+              Telepon / Whatsapp
+            </Text>
+            <Text
+              style={{
+                fontFamily: fonts.secondary[400],
+                color: colors.primary,
+              }}>
+              {user.telepon}
+            </Text>
+          </View>
+
+          <View
+            style={{
+              marginVertical: 3,
+              padding: 10,
+              backgroundColor: colors.white,
+              borderRadius: 10,
+            }}>
+            <Text
+              style={{
+                fontFamily: fonts.secondary[600],
+                color: colors.black,
+              }}>
+              Alamat
+            </Text>
+            <Text
+              style={{
+                fontFamily: fonts.secondary[400],
+                color: colors.primary,
+              }}>
+              {user.alamat}
+            </Text>
+          </View>
+
+
+
+
+
+        </View>
+      </View>
+
+      {/* button */}
+      <View style={{ padding: 10, flexDirection: 'row', marginBottom: 20, }}>
+        <View style={{
+          flex: 1,
+          marginRight: 5
+        }}>
+
           <MyButton
             onPress={() => navigation.navigate('EditProfile', user)}
             title="Edit Profile"
-            colorText={colors.black}
-            iconColor={colors.black}
             warna={colors.secondary}
             Icons="create-outline"
           />
-
-          <MyGap jarak={10} />
-          <View>
-            <View
-              style={{
-                marginVertical: 3,
-                padding: 10,
-                backgroundColor: colors.white,
-                borderRadius: 10,
-              }}>
-              <Text
-                style={{
-                  fontFamily: fonts.secondary[600],
-                  color: colors.black,
-                }}>
-                Nama Pribadi
-              </Text>
-              <Text
-                style={{
-                  fontFamily: fonts.secondary[400],
-                  color: colors.primary,
-                }}>
-                {user.nama_lengkap}
-              </Text>
-            </View>
-
-
-            <View
-              style={{
-                marginVertical: 3,
-                padding: 10,
-                backgroundColor: colors.white,
-                borderRadius: 10,
-              }}>
-              <Text
-                style={{
-                  fontFamily: fonts.secondary[600],
-                  color: colors.black,
-                }}>
-                E-mail
-              </Text>
-              <Text
-                style={{
-                  fontFamily: fonts.secondary[400],
-                  color: colors.primary,
-                }}>
-                {user.email}
-              </Text>
-            </View>
-            <View
-              style={{
-                marginVertical: 3,
-                padding: 10,
-                backgroundColor: colors.white,
-                borderRadius: 10,
-              }}>
-              <Text
-                style={{
-                  fontFamily: fonts.secondary[600],
-                  color: colors.black,
-                }}>
-                Telepon / Whatsapp
-              </Text>
-              <Text
-                style={{
-                  fontFamily: fonts.secondary[400],
-                  color: colors.primary,
-                }}>
-                {user.telepon}
-              </Text>
-            </View>
-
-            <View
-              style={{
-                marginVertical: 3,
-                padding: 10,
-                backgroundColor: colors.white,
-                borderRadius: 10,
-              }}>
-              <Text
-                style={{
-                  fontFamily: fonts.secondary[600],
-                  color: colors.black,
-                }}>
-                Alamat
-              </Text>
-              <Text
-                style={{
-                  fontFamily: fonts.secondary[400],
-                  color: colors.primary,
-                }}>
-                {user.alamat}
-              </Text>
-            </View>
-
-
-
-
-
-          </View>
         </View>
-
-        {/* button */}
-        <View style={{ padding: 10 }}>
+        <View style={{
+          flex: 1,
+          marginLeft: 5,
+        }}>
           <MyButton
             onPress={btnKeluar}
             title="Keluar"
@@ -187,6 +188,8 @@ export default function Account({ navigation, route }) {
           />
         </View>
       </View>
+
+
     </SafeAreaView>
   );
 }

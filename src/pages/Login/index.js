@@ -1,225 +1,172 @@
-import React, { useState, useEffect } from 'react';
-import {
-  StyleSheet,
-  Text,
-  Button,
-  View,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-  Dimensions,
-  ImageBackground,
-  SafeAreaView,
-} from 'react-native';
-import { colors } from '../../utils/colors';
-import { fonts } from '../../utils/fonts';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, Image, ScrollView, ActivityIndicator, TouchableOpacity, BackHandler, Alert } from 'react-native';
 import { MyInput, MyGap, MyButton } from '../../components';
-import LottieView from 'lottie-react-native';
 import axios from 'axios';
-import { storeData, getData, urlAPI } from '../../utils/localStorage';
 import { showMessage } from 'react-native-flash-message';
-import { Icon } from 'react-native-elements';
+import { fonts, windowWidth } from '../../utils/fonts';
+import { colors } from '../../utils/colors';
+import { storeData, urlAPI } from '../../utils/localStorage';
 
 
-export default function Login({ navigation }) {
-  const windowWidth = Dimensions.get('window').width;
-  const windowHeight = Dimensions.get('window').height;
-  const [loading, setLoading] = useState(false);
-  const [valid, setValid] = useState(true);
-  const [show, setShow] = useState(true);
-  const [token, setToken] = useState('');
-  const [data, setData] = useState({
-    email: '',
-    password: '',
+export default function ({ navigation }) {
+
+  const [kirim, setKirim] = useState({
+    email: null,
+    password: null
   });
+  const [loading, setLoading] = useState(false);
+
+
+
+  const masuk = () => {
+
+
+    if (kirim.email == null && kirim.password == null) {
+      alert('telepon dan Passwoord tidak boleh kosong !');
+    } else if (kirim.email == null) {
+      alert('telepon tidak boleh kosong !');
+    } else if (kirim.password == null) {
+      alert('Passwoord tidak boleh kosong !');
+    } else {
+
+      setLoading(true);
+
+      console.log(kirim);
+
+      axios
+        .post(urlAPI + 'login', kirim)
+        .then(res => {
+          setLoading(false);
+          console.log(res.data);
+          if (res.data.code == 404) {
+            showMessage({
+              type: 'danger',
+              message: res.data.message
+            })
+          } else {
+            storeData('user', res.data.data);
+            navigation.replace('MainApp')
+          }
+
+        });
+
+
+
+    }
+
+
+
+
+  }
 
   useEffect(() => {
-    getData('token').then(res => {
-      console.log('data token,', res);
-      setToken(res.token);
-    });
-  }, []);
 
-  // login ok
-  const masuk = () => {
-    if (data.email.length === 0 && data.password.length === 0) {
-      showMessage({
-        message: 'Maaf email dan Password masih kosong !',
-      });
-    } else if (data.email.length === 0) {
-      showMessage({
-        message: 'Maaf email masih kosong !',
-      });
-    } else if (data.password.length === 0) {
-      showMessage({
-        message: 'Maaf Password masih kosong !',
-      });
-    } else {
-      setLoading(true);
-      console.log(data);
-      setTimeout(() => {
-        axios
-          .post(urlAPI + '/login.php', data)
-          .then(res => {
-            console.log(res.data);
-            setLoading(false);
-            if (res.data.kode == 50) {
-              showMessage({
-                type: 'danger',
-                message: res.data.msg,
-              });
-            } else {
-              storeData('user', res.data);
-              axios
-                .post(urlAPI + '/update_token.php', {
-                  id_member: res.data.id,
-                  token: token,
-                })
-                .then(res => {
-                  console.log('update token', res);
-                });
+    // const backAction = () => {
+    //   Alert.alert("Info Wks", "Apakah kamu yakin akan keluar aplikasi ?", [
+    //     {
+    //       text: "Cancel",
+    //       onPress: () => null,
+    //       style: "cancel"
+    //     },
+    //     { text: "YES", onPress: () => BackHandler.exitApp() }
+    //   ]);
+    //   return true;
+    // };
 
-              navigation.replace('MainApp');
-            }
-          });
-      }, 1200);
-    }
-  };
+    // const backHandler = BackHandler.addEventListener(
+    //   "hardwareBackPress",
+    //   backAction
+    // );
+
+    // return () => backHandler.remove();
+  }, [])
+
   return (
-    <ImageBackground style={styles.page}>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={{
-          flex: 1,
-          marginTop: 20,
-        }}>
-        <View
-          style={{
-            height: 220,
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
+    <ScrollView style={{ padding: 10, flex: 1, backgroundColor: colors.white }}>
+      <View style={{ justifyContent: 'center', alignItems: 'center', paddingHorizontal: 5, paddingTop: 10 }}>
 
-            padding: 10,
-            borderRadius: 10,
-          }}>
+        <View style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}>
+
+
           <Image
             source={require('../../assets/logo.png')}
-            style={{
-              resizeMode: 'contain',
-              width: 200,
-              // aspectRatio: 1,
-            }}
+            style={
+              {
+                width: 200,
+                height: 200,
+                resizeMode: 'contain'
+              }
+            }
           />
+
+
+
         </View>
-        <View style={styles.page}>
-          <Text
-            style={{
-              fontFamily: fonts.secondary[400],
-              fontSize: windowWidth / 20,
-              color: colors.black,
-              // maxWidth: 230,
-              textAlign: 'center',
-            }}>
-            Silahkan login untuk masuk ke aplikasi
-          </Text>
 
-          <MyGap jarak={20} />
-          <MyInput
-            label="Email"
-            iconname="mail"
-            value={data.email}
-            onChangeText={value =>
-              setData({
-                ...data,
-                email: value,
-              })
-            }
-          />
 
-          <MyGap jarak={20} />
-          <MyInput
-            label="Password"
-            iconname="key"
-            secureTextEntry={show}
-            onChangeText={value =>
-              setData({
-                ...data,
-                password: value,
-              })
-            }
-          />
+      </View>
+      <MyGap jarak={10} />
+      <View style={{ padding: 10, marginVertical: 10, flex: 1 }}>
+        <MyInput label="Email" onChangeText={val => setKirim({
+          ...kirim,
+          email: val
+        })}
+          iconname="mail" placeholder="Masukan email Anda" />
+        <MyGap jarak={20} />
+        <MyInput
+          onChangeText={val => setKirim({
+            ...kirim,
+            password: val
+          })}
+          secureTextEntry={true}
+          label="Password"
+          iconname="key"
+          placeholder="Masukan password Anda"
+        />
+        <MyGap jarak={40} />
+        {!loading &&
 
-          {!show && <TouchableOpacity onPress={() => {
-            setShow(true)
-          }} style={{
-            paddingHorizontal: 5,
-            paddingVertical: 10,
-            justifyContent: 'flex-end',
-            alignItems: 'flex-end',
-            flexDirection: 'row'
-          }}>
-            <Icon size={windowWidth / 25} color={colors.textPrimary} type='ionicon' name='eye-off-outline' />
-            <Text style={{
-              left: 5,
-              fontFamily: fonts.secondary[600],
-              fontSize: windowWidth / 30,
-              color: colors.textPrimary,
-            }}>Hide Password</Text>
-          </TouchableOpacity>}
-
-          {show && <TouchableOpacity onPress={() => {
-            setShow(false)
-          }} style={{
-            paddingHorizontal: 5,
-            paddingVertical: 10,
-            justifyContent: 'flex-end',
-            alignItems: 'flex-end',
-            flexDirection: 'row'
-          }}>
-            <Icon size={windowWidth / 25} color={colors.textPrimary} type='ionicon' name='eye-outline' />
-            <Text style={{
-              left: 5,
-              color: colors.textPrimary,
-              fontFamily: fonts.secondary[600],
-              fontSize: windowWidth / 30
-            }}>Show Password</Text>
-          </TouchableOpacity>}
-          <MyGap jarak={40} />
-          {valid && (
+          <>
             <MyButton
-              warna={colors.primary}
-              title="LOGIN"
-              Icons="log-in"
               onPress={masuk}
+              title="Masuk"
+              warna={colors.primary}
+              Icons="log-in-outline"
             />
-          )}
+            <TouchableOpacity onPress={() => navigation.navigate('Register')} style={{
+              padding: 10,
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}><Text style={{
+              fontSize: windowWidth / 28,
+              marginTop: 10,
+              fontFamily: fonts.primary[400],
+              textAlign: 'center',
+              color: colors.secondary
+            }}>Belum punya akun ? <Text style={{
+              fontSize: windowWidth / 28,
+              marginTop: 10,
+              fontFamily: fonts.primary[600],
+              textAlign: 'center',
+              color: colors.secondary
+            }}>Daftar disini</Text></Text></TouchableOpacity>
+          </>
+        }
 
-
-        </View>
-      </ScrollView>
-      {
-        loading && (
-          <LottieView
-            source={require('../../assets/animation.json')}
-            autoPlay
-            loop
-            style={{ backgroundColor: colors.primary }}
-          />
-        )
-      }
-    </ImageBackground >
+      </View>
+      {loading && <View style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}>
+        <ActivityIndicator color={colors.primary} size="large" />
+      </View>}
+    </ScrollView>
   );
 }
 
-const styles = StyleSheet.create({
-  page: {
-    flex: 1,
-    backgroundColor: colors.background1,
-    padding: 10,
-  },
-  image: {
-    aspectRatio: 1.5,
-    resizeMode: 'contain',
-  },
-});
+const styles = StyleSheet.create({});

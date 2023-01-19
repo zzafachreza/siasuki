@@ -89,7 +89,7 @@ export default function BottomNavigator({ state, descriptors, navigation }) {
                     } else {
                       console.log('barcode : ', result);
                       navigation.navigate('Show', {
-                        key: parseInt(result)
+                        label: result.toString()
                       })
                     }
 
@@ -116,12 +116,21 @@ export default function BottomNavigator({ state, descriptors, navigation }) {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
-                <Icon
+
+                {label !== 'Scan' && <Icon
                   name={isFocused ? iconName.replace('-outline', '') : iconName}
                   type="ionicon"
                   size={windowWidth / 20}
                   color={isFocused ? colors.primary : colors.primary}
-                />
+                />}
+
+                {label == 'Scan' && <Icon
+                  name={isFocused ? iconName.replace('-outline', '') : iconName}
+                  type="ionicon"
+                  size={windowWidth / 20}
+                  color={isFocused ? colors.primary : colors.white}
+                />}
+
 
                 {label !== 'Scan' && <Text
                   style={{
@@ -150,7 +159,7 @@ const styles = StyleSheet.create({
   }),
   box: { flex: 1, },
   boxScan: {
-    backgroundColor: colors.secondary,
+    backgroundColor: colors.primary,
     borderRadius: 30,
     marginBottom: 5,
     justifyContent: 'center',

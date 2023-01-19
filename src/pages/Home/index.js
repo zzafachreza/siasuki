@@ -181,41 +181,6 @@ export default function Home({ navigation }) {
     </TouchableOpacity>
   );
 
-  const __renderItemKategori = ({ item }) => {
-    return (
-      <TouchableOpacity onPress={() => navigation.navigate('Barang', {
-        key: item.id,
-        id_user: user.id
-      })} style={{
-        backgroundColor: colors.background1,
-        margin: 3,
-        flex: 0.5,
-
-      }}>
-
-        <View style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-
-        }}>
-          <Image style={{
-            width: '100%',
-            height: 150,
-            resizeMode: 'contain'
-
-          }} source={{
-            uri: item.image
-          }} />
-        </View>
-        <Text style={{
-          textAlign: 'center',
-          color: colors.textPrimary,
-          fontFamily: fonts.secondary[600],
-          fontSize: windowWidth / 30,
-        }}>{item.nama_kategori}</Text>
-      </TouchableOpacity>
-    )
-  }
 
 
   return (
@@ -233,52 +198,17 @@ export default function Home({ navigation }) {
         }}>
 
 
-        <View style={{
-          flexDirection: 'row'
-        }}>
-          <TouchableOpacity onPress={() => navigation.navigate('Barang', {
-            key: 0,
-            id_user: user.id
-          })} style={{
-            flex: 1,
-            height: 40,
-            flexDirection: 'row',
-            backgroundColor: colors.background6,
-            borderRadius: 5,
 
-          }}>
-
-            <View style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              paddingLeft: 10,
-            }}>
-              <Icon type='ionicon' name="search-outline" color={colors.black} size={windowWidth / 30} />
-            </View>
-            <View style={{
-              paddingLeft: 5,
-              flex: 1,
-              justifyContent: 'center'
-            }}>
-              <Text style={{
-                fontFamily: fonts.secondary[400],
-                color: colors.black,
-                fontSize: windowWidth / 30
-              }}>Pencarian barang</Text>
-            </View>
-
-          </TouchableOpacity>
-
-          {/* <TouchableOpacity onPress={() => navigation.navigate('Scan')} style={{
-            padding: 10,
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}>
-            <Icon type='ionicon' name='qr-code-outline' color={colors.primary} />
-          </TouchableOpacity> */}
-
-        </View>
-
+        <Text style={{
+          fontFamily: fonts.secondary[400],
+          fontSize: windowWidth / 28,
+          color: colors.black,
+        }}>Selamat datang, {user.nama_lengkap} </Text>
+        <Text style={{
+          fontFamily: fonts.secondary[600],
+          fontSize: windowWidth / 20,
+          color: colors.black,
+        }}>Sias UKI</Text>
 
       </View>
 
@@ -322,8 +252,8 @@ export default function Home({ navigation }) {
               <Text style={{
                 fontFamily: fonts.secondary[600],
                 fontSize: windowWidth / 20,
-                color: colors.primary,
-              }}>KOMPONEN</Text>
+                color: colors.white,
+              }}>DATA PERALATAN</Text>
             </View>
           </TouchableOpacity>
 
@@ -353,7 +283,7 @@ export default function Home({ navigation }) {
               <Text style={{
                 fontFamily: fonts.secondary[600],
                 fontSize: windowWidth / 20,
-                color: colors.secondary,
+                color: colors.white,
               }}>INVENTARISASI ASET</Text>
             </View>
           </TouchableOpacity>

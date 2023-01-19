@@ -26,6 +26,7 @@ const wait = timeout => {
 export default function ({ navigation, route }) {
     const [refreshing, setRefreshing] = React.useState(false);
     const [data, setData] = useState([]);
+    const [tmp, setTmp] = useState([]);
     const [loading, setLoading] = useState(false);
     const [myKey, setMykey] = useState('');
 
@@ -44,28 +45,15 @@ export default function ({ navigation, route }) {
 
     const getDataBarang = (y) => {
         setLoading(true);
-        axios.post(urlAPI + '/1data_barang2.php', {
-            key: route.params.key,
-            key2: y,
-            id_user: route.params.id_user
-        }).then(res => {
-            setMykey('');
-            console.warn(res.data);
-            setLoading(false);
+        axios.post(urlAPI + 'peralatan').then(res => {
+            setLoading(false)
             setData(res.data);
-            if (res.data.length == 0) {
-                showMessage({
-                    message: 'Maaf barang tidak ditemukan !',
-                    type: 'default'
-                })
-            }
+            setTmp(res.data);
         });
     };
 
     const renderItem = ({ item }) => (
-        <TouchableOpacity onPress={() => navigation.navigate('Show2', {
-            key: item.id
-        })} style={{
+        <View style={{
             flexDirection: 'row',
             marginVertical: 5,
             borderBottomWidth: 1,
@@ -82,7 +70,7 @@ export default function ({ navigation, route }) {
                         color: colors.black,
                         fontFamily: fonts.secondary[600],
                     }}>
-                    {item.nama}
+                    {item.nama_peralatan}
                 </Text>
                 <Text
                     style={{
@@ -91,45 +79,26 @@ export default function ({ navigation, route }) {
                         color: colors.textSecondary,
                         fontFamily: fonts.secondary[400],
                     }}>
-                    {item.spek}
+                    {item.kode_inventaris}
                 </Text>
-                <Text
-                    style={{
-                        marginVertical: 5,
-                        fontSize: windowWidth / 25,
-                        color: colors.black,
-                        fontFamily: fonts.secondary[600],
-                    }}>
-                    {new Intl.NumberFormat().format(item.harga)}
-                </Text>
-
             </View>
-            <View style={{
-                justifyContent: 'center',
-                alignItems: 'center'
-            }}>
+            <View>
+                <Text style={{
 
-                {item.foto_barang !== '' && <Image source={{
-                    uri: urlFull + item.foto_barang
-                }} style={{
-                    alignSelf: 'center',
-                    width: 80,
-                    height: 80,
+                    width: 100, height: 20,
                     borderRadius: 10,
-
-                }} />}
-
-
-                {item.foto_barang === '' && <Image source={require('../../assets/noimage.png')} style={{
-                    alignSelf: 'center',
-                    width: 80,
-                    height: 80,
+                    textAlign: 'center',
+                    color: colors.black
+                }}>Umur Ekonomis</Text>
+                <Text style={{
+                    backgroundColor: colors.primary,
+                    width: 100, height: 20,
                     borderRadius: 10,
-
-                }} />}
-
+                    textAlign: 'center',
+                    color: colors.white
+                }}>{item.umur_ekonomis} Tahun</Text>
             </View>
-        </TouchableOpacity>
+        </View>
     );
 
     return (
@@ -144,14 +113,18 @@ export default function ({ navigation, route }) {
                 position: 'relative',
                 padding: 5,
             }}>
-                <TextInput autoFocus value={myKey} autoCapitalize='none' onSubmitEditing={(x) => {
-                    console.warn(x.nativeEvent.text);
-                    setMykey(x.nativeEvent.text);
-                    getDataBarang(x.nativeEvent.text);
-                }}
-                    onChangeText={x => setMykey(x)}
+                <TextInput autoFocus autoCapitalize='none'
+                    onChangeText={x => {
+
+
+                        const filtered = tmp.filter(i => i.nama_peralatan.toLowerCase().indexOf(x.toLowerCase()) > -1);
+                        console.log(filtered);
+                        setData(filtered);
+
+
+                    }}
                     placeholderTextColor={colors.textPrimary}
-                    placeholder='Masukan kata kunci komponen' style={{
+                    placeholder='Masukan kata kunci peralatan' style={{
                         fontFamily: fonts.secondary[400],
                         paddingLeft: 10,
                         fontSize: windowWidth / 30,
