@@ -45,7 +45,7 @@ export default function ({ navigation, route }) {
 
     const getDataBarang = (y) => {
         setLoading(true);
-        axios.post(urlAPI + 'peralatan').then(res => {
+        axios.post(urlAPI + 'kategori').then(res => {
             setLoading(false)
             setData(res.data);
             setTmp(res.data);
@@ -54,6 +54,7 @@ export default function ({ navigation, route }) {
 
     const renderItem = ({ item }) => (
         <View style={{
+            marginHorizontal: 10,
             flexDirection: 'row',
             marginVertical: 5,
             borderBottomWidth: 1,
@@ -70,33 +71,17 @@ export default function ({ navigation, route }) {
                         color: colors.black,
                         fontFamily: fonts.secondary[600],
                     }}>
-                    {item.nama_peralatan}
+                    {item.nama_kategori}
                 </Text>
-                <Text
-                    style={{
-                        marginVertical: 2,
-                        fontSize: windowWidth / 30,
-                        color: colors.textSecondary,
-                        fontFamily: fonts.secondary[400],
-                    }}>
-                    {item.kode_inventaris}
-                </Text>
+
             </View>
             <View>
-                <Text style={{
-
-                    width: 100, height: 20,
-                    borderRadius: 10,
-                    textAlign: 'center',
-                    color: colors.black
-                }}>Umur Ekonomis</Text>
-                <Text style={{
-                    backgroundColor: colors.primary,
-                    width: 100, height: 20,
-                    borderRadius: 10,
-                    textAlign: 'center',
-                    color: colors.white
-                }}>{item.umur_ekonomis} Tahun</Text>
+                <Image style={{
+                    width: 50,
+                    height: 50,
+                }} source={{
+                    uri: urlFull + item.foto_kategori
+                }} />
             </View>
         </View>
     );
@@ -117,14 +102,14 @@ export default function ({ navigation, route }) {
                     onChangeText={x => {
 
 
-                        const filtered = tmp.filter(i => i.nama_peralatan.toLowerCase().indexOf(x.toLowerCase()) > -1);
+                        const filtered = tmp.filter(i => i.nama_kategori.toLowerCase().indexOf(x.toLowerCase()) > -1);
                         console.log(filtered);
                         setData(filtered);
 
 
                     }}
                     placeholderTextColor={colors.textPrimary}
-                    placeholder='Masukan kata kunci peralatan' style={{
+                    placeholder='Masukan kata kunci' style={{
                         fontFamily: fonts.secondary[400],
                         paddingLeft: 10,
                         fontSize: windowWidth / 30,

@@ -32,23 +32,27 @@ export default function ({ navigation }) {
       setLoading(true);
 
       console.log(kirim);
+      storeData('user', {
+        username: 'reza',
+        nama_lengkap: 'Fachreza Maulana'
+      });
+      navigation.replace('MainApp')
 
-      axios
-        .post(urlAPI + 'login', kirim)
-        .then(res => {
-          setLoading(false);
-          console.log(res.data);
-          if (res.data.code == 404) {
-            showMessage({
-              type: 'danger',
-              message: res.data.message
-            })
-          } else {
-            storeData('user', res.data.data);
-            navigation.replace('MainApp')
-          }
+      // axios
+      //   .post(urlAPI + 'login', kirim)
+      //   .then(res => {
+      //     setLoading(false);
+      //     console.log(res.data);
+      //     if (res.data.code == 404) {
+      //       showMessage({
+      //         type: 'danger',
+      //         message: res.data.message
+      //       })
+      //     } else {
 
-        });
+      //     }
+
+      //   });
 
 
 
@@ -111,11 +115,11 @@ export default function ({ navigation }) {
       </View>
       <MyGap jarak={10} />
       <View style={{ padding: 10, marginVertical: 10, flex: 1 }}>
-        <MyInput label="Email" onChangeText={val => setKirim({
+        <MyInput label="Username" onChangeText={val => setKirim({
           ...kirim,
           email: val
         })}
-          iconname="mail" placeholder="Masukan email Anda" />
+          iconname="at" placeholder="Masukan username Anda" />
         <MyGap jarak={20} />
         <MyInput
           onChangeText={val => setKirim({
@@ -124,7 +128,7 @@ export default function ({ navigation }) {
           })}
           secureTextEntry={true}
           label="Password"
-          iconname="key"
+          iconname="lock-closed-outline"
           placeholder="Masukan password Anda"
         />
         <MyGap jarak={40} />
@@ -137,7 +141,7 @@ export default function ({ navigation }) {
               warna={colors.primary}
               Icons="log-in-outline"
             />
-            <TouchableOpacity onPress={() => navigation.navigate('Register')} style={{
+            {/* <TouchableOpacity onPress={() => navigation.navigate('Register')} style={{
               padding: 10,
               justifyContent: 'center',
               alignItems: 'center'
@@ -153,7 +157,7 @@ export default function ({ navigation }) {
               fontFamily: fonts.primary[600],
               textAlign: 'center',
               color: colors.secondary
-            }}>Daftar disini</Text></Text></TouchableOpacity>
+            }}>Daftar disini</Text></Text></TouchableOpacity> */}
           </>
         }
 

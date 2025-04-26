@@ -89,7 +89,7 @@ export default function BottomNavigator({ state, descriptors, navigation }) {
                     } else {
                       console.log('barcode : ', result);
                       navigation.navigate('Show', {
-                        label: result.toString()
+                        kode_qr: result.toString().trim()
                       })
                     }
 

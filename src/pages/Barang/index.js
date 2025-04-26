@@ -45,7 +45,7 @@ export default function ({ navigation, route }) {
 
   const getDataBarang = (y) => {
     setLoading(true);
-    axios.post(urlAPI + 'inventaris').then(res => {
+    axios.post(urlAPI + 'aset').then(res => {
       console.log(res.data)
       setLoading(false)
       setData(res.data);
@@ -64,6 +64,12 @@ export default function ({ navigation, route }) {
       <View style={{
         flex: 1,
       }}>
+        <Image source={{
+          uri: urlFull + item.gambar
+        }} style={{
+          width: 80,
+          height: 80,
+        }} />
         <Text
           style={{
             marginVertical: 2,
@@ -71,7 +77,7 @@ export default function ({ navigation, route }) {
             color: colors.primary,
             fontFamily: fonts.secondary[400],
           }}>
-          {item.label}
+          {item.nama_aset}
         </Text>
         <Text
           style={{
@@ -80,17 +86,9 @@ export default function ({ navigation, route }) {
             color: colors.black,
             fontFamily: fonts.secondary[600],
           }}>
-          {item.nama_peralatan}
+          {item.kode_aset}
         </Text>
-        <Text
-          style={{
-            marginVertical: 2,
-            fontSize: windowWidth / 30,
-            color: colors.textSecondary,
-            fontFamily: fonts.secondary[400],
-          }}>
-          {item.kode_inventaris}
-        </Text>
+
       </View>
       <View>
         <Text style={{
@@ -110,7 +108,7 @@ export default function ({ navigation, route }) {
             color: colors.black,
             fontFamily: fonts.secondary[400],
           }}>
-          Rp. {item.penyusutan}
+          Rp. {new Intl.NumberFormat().format(item.harga)}
         </Text>
       </View>
       <View style={{
@@ -139,13 +137,13 @@ export default function ({ navigation, route }) {
           onChangeText={x => {
 
 
-            const filtered = tmp.filter(i => i.label.toLowerCase().indexOf(x.toLowerCase()) > -1);
+            const filtered = tmp.filter(i => i.nama_aset.toLowerCase().indexOf(x.toLowerCase()) > -1);
             console.log(filtered);
             setData(filtered);
 
 
           }}
-          keyboardType='number-pad'
+
           placeholderTextColor={colors.textPrimary}
           placeholder='Masukan label inventaris' style={{
             fontFamily: fonts.secondary[400],

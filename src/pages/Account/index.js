@@ -97,61 +97,17 @@ export default function Account({ navigation, route }) {
                 fontFamily: fonts.secondary[600],
                 color: colors.black,
               }}>
-              E-mail
+              Username
             </Text>
             <Text
               style={{
                 fontFamily: fonts.secondary[400],
                 color: colors.primary,
               }}>
-              {user.email}
-            </Text>
-          </View>
-          <View
-            style={{
-              marginVertical: 3,
-              padding: 10,
-              backgroundColor: colors.white,
-              borderRadius: 10,
-            }}>
-            <Text
-              style={{
-                fontFamily: fonts.secondary[600],
-                color: colors.black,
-              }}>
-              Telepon / Whatsapp
-            </Text>
-            <Text
-              style={{
-                fontFamily: fonts.secondary[400],
-                color: colors.primary,
-              }}>
-              {user.telepon}
+              {user.username}
             </Text>
           </View>
 
-          <View
-            style={{
-              marginVertical: 3,
-              padding: 10,
-              backgroundColor: colors.white,
-              borderRadius: 10,
-            }}>
-            <Text
-              style={{
-                fontFamily: fonts.secondary[600],
-                color: colors.black,
-              }}>
-              Alamat
-            </Text>
-            <Text
-              style={{
-                fontFamily: fonts.secondary[400],
-                color: colors.primary,
-              }}>
-              {user.alamat}
-            </Text>
-          </View>
 
 
 
@@ -162,21 +118,10 @@ export default function Account({ navigation, route }) {
 
       {/* button */}
       <View style={{ padding: 10, flexDirection: 'row', marginBottom: 20, }}>
-        <View style={{
-          flex: 1,
-          marginRight: 5
-        }}>
 
-          <MyButton
-            onPress={() => navigation.navigate('EditProfile', user)}
-            title="Edit Profile"
-            warna={colors.secondary}
-            Icons="create-outline"
-          />
-        </View>
         <View style={{
           flex: 1,
-          marginLeft: 5,
+
         }}>
           <MyButton
             onPress={btnKeluar}

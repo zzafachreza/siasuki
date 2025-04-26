@@ -8,14 +8,18 @@ import { colors } from '../../utils/colors';
 import { fonts, windowWidth } from '../../utils/fonts';
 
 export default function Show({ navigation, route }) {
-    const [barang, setBarang] = useState({});
+    console.log(route.params)
+    const [barang, setBarang] = useState({
+        gambar: '',
+
+    });
     const [loading, setLoading] = useState(true);
     useEffect(() => {
-        axios.post(urlAPI + '/get_inventaris', {
-            key: route.params.label
+        axios.post(urlAPI + 'get_aset', {
+            key: route.params.kode_qr
         }).then(res => {
             console.warn(res.data);
-            setBarang(res.data);
+            setBarang(res.data[0]);
             setLoading(false)
         })
     }, [])
@@ -67,27 +71,27 @@ export default function Show({ navigation, route }) {
                     flex: 1,
                     backgroundColor: colors.white
                 }}>
-                    <MyList label='Label' value={barang.label} />
-                    <MyList label='Nama barang' value={barang.nama_peralatan} />
-                    <MyList label='Merek' value={barang.merek} />
 
-                    <MyList label='Unit' value={barang.nama_unit} />
-                    <MyList label='Kampus' value={barang.kampus} />
-                    <MyList label='Gedung' value={barang.gedung} />
-                    <MyList label='Lantai' value={barang.lantai} />
-                    <MyList label='Fakultas' value={barang.nama_fakultas} />
-                    <MyList label='Kelompok Aktiva' value={barang.nama_kelompok} />
-                    <MyList label='Nomor ruangan' value={barang.nomor_ruangan} />
-                    <MyList label='Nama ruangan' value={barang.nama_ruangan} />
-                    <MyList label='Tipe ruangan' value={barang.tipe} />
+                    <Image source={{
+                        uri: urlFull + barang.gambar
+                    }} style={{
+                        width: windowWidth,
+                        height: windowWidth
+                    }} />
+                    <MyList label='Kode QR' value={barang.kode_qr} />
+                    <MyList label='Nama barang' value={barang.nama_aset} />
+
+                    <MyList label='Kategori' value={barang.nama_kategori} />
+
+                    <MyList label='Lokasi' value={barang.nama_lokasi} />
+
+                    <MyList label='Umur' value={barang.umur} />
 
 
-                    <MyList label='Jumlah' value={barang.jumlah} />
-                    <MyList label='Harga perolehan' value={new Intl.NumberFormat().format(barang.harga_perolehan)} />
-                    <MyList label='Nilai Residu' value={new Intl.NumberFormat().format(barang.nilai_residu)} />
-                    <MyList label='Penyusutan' value={new Intl.NumberFormat().format((barang.harga_perolehan - barang.nilai_residu) / barang.umur_ekonomis)} />
+                    <MyList label='Harga perolehan' value={new Intl.NumberFormat().format(barang.harga)} />
+                    <MyList label='Nilai Residu' value={new Intl.NumberFormat().format(barang.harga_residu)} />
+                    <MyList label='Penyusutan' value={new Intl.NumberFormat().format((barang.harga - barang.harga_residu) / barang.umur)} />
 
-                    <MyList label='Keterangan' value={barang.keterangan} />
 
                     <MyList label='Status' value={barang.status} />
 

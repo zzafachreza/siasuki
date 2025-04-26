@@ -36,24 +36,6 @@ export default function Home({ navigation }) {
 
   useEffect(() => {
 
-    const unsubscribe = messaging().onMessage(async remoteMessage => {
-
-      const json = JSON.stringify(remoteMessage);
-      const obj = JSON.parse(json);
-
-      // console.log(obj);
-
-      // alert(obj.notification.title)
-
-
-
-      PushNotification.localNotification({
-        /* Android Only Properties */
-        channelId: 'siasuki', // (required) channelId, if the channel doesn't exist, notification will not trigger.
-        title: obj.notification.title, // (optional)
-        message: obj.notification.body, // (required)
-      });
-    });
 
     getDataProduk();
     getDataKategori();
@@ -61,12 +43,11 @@ export default function Home({ navigation }) {
     if (isFocused) {
       __getDataUserInfo();
     }
-    return unsubscribe;
   }, [isFocused]);
 
 
   const getDataProduk = () => {
-    axios.post(urlAPI + '/1data_barang.php').then(res => {
+    axios.post(urlAPI + 'aset').then(res => {
       console.log('barang', res.data);
 
       setProduk(res.data);
@@ -74,7 +55,7 @@ export default function Home({ navigation }) {
   }
 
   const getDataKategori = () => {
-    axios.post(urlAPI + '/1data_kategori.php').then(res => {
+    axios.post(urlAPI + 'kategori').then(res => {
       console.log('kategori', res.data);
 
       setKategori(res.data);
@@ -87,25 +68,6 @@ export default function Home({ navigation }) {
     getData('user').then(users => {
       console.log(users);
       setUser(users);
-      axios.post(urlAPI + '/1_cart.php', {
-        fid_user: users.id
-      }).then(res => {
-        console.log('cart', res.data);
-
-        setCart(parseFloat(res.data))
-      })
-      getData('token').then(res => {
-        console.log('data token,', res);
-        setToken(res.token);
-        axios
-          .post(urlAPI + '/update_token.php', {
-            id: users.id,
-            token: res.token,
-          })
-          .then(res => {
-            console.error('update token', res.data);
-          });
-      });
     });
   }
 
@@ -208,7 +170,7 @@ export default function Home({ navigation }) {
           fontFamily: fonts.secondary[600],
           fontSize: windowWidth / 20,
           color: colors.black,
-        }}>Sias UKI</Text>
+        }}>My Asset</Text>
 
       </View>
 
@@ -231,6 +193,7 @@ export default function Home({ navigation }) {
             id_user: user.id
           })} style={{
             marginVertical: 5,
+            padding: 10,
             elevation: 1,
             flexDirection: 'row',
             backgroundColor: colors.secondary
@@ -239,7 +202,7 @@ export default function Home({ navigation }) {
               justifyContent: 'center',
               alignItems: 'center'
             }}>
-              <Image source={require('../../assets/logo.png')} style={{
+              <Image source={require('../../assets/a1.png')} style={{
                 height: windowHeight / 5,
                 width: windowHeight / 5,
               }} />
@@ -253,7 +216,7 @@ export default function Home({ navigation }) {
                 fontFamily: fonts.secondary[600],
                 fontSize: windowWidth / 20,
                 color: colors.white,
-              }}>DATA PERALATAN</Text>
+              }}>KATEGORI</Text>
             </View>
           </TouchableOpacity>
 
@@ -263,6 +226,7 @@ export default function Home({ navigation }) {
           })} style={{
             marginVertical: 5,
             elevation: 1,
+            padding: 10,
             flexDirection: 'row',
             backgroundColor: colors.primary
           }}>
@@ -270,7 +234,7 @@ export default function Home({ navigation }) {
               justifyContent: 'center',
               alignItems: 'center'
             }}>
-              <Image source={require('../../assets/logo.png')} style={{
+              <Image source={require('../../assets/a2.png')} style={{
                 height: windowHeight / 5,
                 width: windowHeight / 5,
               }} />
@@ -297,7 +261,7 @@ export default function Home({ navigation }) {
             color: colors.primary,
             fontFamily: fonts.secondary[600],
           }}>
-          YAYASAN UNIVERSITAS KRISTEN INDONESIA
+          APLIKASI INVENTARISASI ASET
         </Text>
       </ScrollView>
 
